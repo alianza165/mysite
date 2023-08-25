@@ -36,8 +36,7 @@ export default function Main() {
   return (
     <div className="bg-gradient-to-tr from-slate-200">
     <Feature />
-    <p className='text-center px-4 md:px-12 pt-8 pb-16 md:py-12 text-4xl font-bold underline decoration-1 font-sans'> Projects </p>
-      <div className="relative grid grid-cols-1 gap-x-6 gap-y-16 px-4 md:px-12 md:grid-cols-2 md:gap-x-8">
+    <div className="relative grid grid-cols-1 gap-x-6 gap-y-16 px-4 mt-16 md:px-12 md:grid-cols-2 md:gap-x-8">
         
         <div
           className="md:p-2  bg-gradient-to-tr from-sky-100 rounded-md shadow-xl"
