@@ -28,7 +28,7 @@ export default function Header() {
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 items-center justify-between">
+            <div className="relative flex h-12 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
                 <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-900 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -44,15 +44,15 @@ export default function Header() {
               <Link href={{pathname: '/'}} passHref>
                   <Image
                     className="block w-auto lg:hidden"
-                    src="/logo.png"
-                    width={100}
-                    height={100}
+                    src="https://ducaqjqbmh7lv.cloudfront.net/mysite/logo.png"
+                    width={80}
+                    height={20}
                   />
                   <Image
                     className="hidden w-auto lg:block"
-                    src="/logo.png"
-                    width={100}
-                    height={100}
+                    src="https://ducaqjqbmh7lv.cloudfront.net/mysite/logo.png"
+                    width={80}
+                    height={20}
                   />
               </Link>
                 

@@ -3,6 +3,13 @@ import Image from 'next/image';
 import Feature from './components/feature';
 import Link from 'next/link';
 
+
+const details = [
+  {
+    backgroundImage: '/blur1.jpeg',
+  },
+];
+
 export default function Main() {
   const videoRefs = [
     useRef(null),
@@ -23,6 +30,9 @@ export default function Main() {
     }
   };
 
+  
+  const detail = details[0];
+
   return (
     <div className="bg-gradient-to-tr from-slate-200">
     <Feature />
@@ -30,7 +40,7 @@ export default function Main() {
       <div className="relative grid grid-cols-1 gap-x-6 gap-y-16 px-4 md:px-12 md:grid-cols-2 md:gap-x-8">
         
         <div
-          className="md:p-2 bg-gradient-to-tr from-sky-100 rounded-md shadow-xl"
+          className="md:p-2  bg-gradient-to-tr from-sky-100 rounded-md shadow-xl"
           onMouseEnter={() => handleMouseEnter(0)}
           onMouseLeave={() => handleMouseLeave(0)}
         >
@@ -40,7 +50,7 @@ export default function Main() {
           <p className='px-4 pt-2 hidden sm:block'>Dashboards</p>
           <div className="hover:scale-110 md:hover:scale-125 p-4 transition-all">
             <video ref={videoRefs[0]} className="opacity-90 object-cover border" loop muted>
-              <source src="/dashboard.mp4" />
+              <source src="https://ducaqjqbmh7lv.cloudfront.net/mysite/dashboard.mp4" />
             </video>
           </div>
           <div className='block md:hidden'>
@@ -58,7 +68,7 @@ export default function Main() {
                   <li>AWS EC2</li>
                   <li>Vercel</li>
                 </ul>
-                <Link href='/projects/dashboard'>
+                <Link href={{ pathname: '/projects/detail', query: { name: 'dashboard'} }} passHref>
                   <p className='p-1 bg-indigo-600 hover:bg-indigo-300 italic transition-all rounded-md mt-2 mx-auto text-center'>Learn More</p>
                 </Link>
               </div>
@@ -83,7 +93,7 @@ export default function Main() {
                 <li>AWS EC2</li>
                 <li>Vercel</li>
               </ul>
-              <Link href='/projects/dashboard'>
+              <Link href={{ pathname: '/projects/detail', query: { name: 'dashboard'} }} passHref>
                 <p className='p-1 bg-indigo-600 hover:bg-indigo-300 italic transition-all rounded-md mt-2 mx-auto text-center'>Learn More</p>
               </Link>
             </div>
@@ -108,7 +118,7 @@ export default function Main() {
               <li>AWS EC2</li>
               <li>Vercel</li>
             </ul>
-            <Link href='/projects/ecommerce'>
+            <Link href={{ pathname: '/projects/detail', query: { name: 'ecommerce'} }} passHref>
               <p className='p-1 bg-indigo-600 hover:bg-indigo-300 italic transition-all rounded-md mt-2 mx-auto text-center'>Learn More</p>
             </Link>
           </div>
@@ -126,7 +136,7 @@ export default function Main() {
           <p className='px-4 pt-2 hidden sm:block'> E-commerce website</p>
           <div className="hover:scale-110 md:hover:scale-125 p-4 transition-all">
             <video ref={videoRefs[1]} className="opacity-90 object-cover border" loop muted>
-              <source src="/ecom.mp4" />
+              <source src="https://ducaqjqbmh7lv.cloudfront.net/mysite/ecom.mp4" />
             </video>
           </div>
           <div className='block md:hidden'>
@@ -144,7 +154,7 @@ export default function Main() {
                   <li>AWS EC2</li>
                   <li>Vercel</li>
                 </ul>
-                <Link href='/projects/ecommerce'>
+                <Link href={{ pathname: '/projects/detail', query: { name: 'ecommerce'} }} passHref>
                   <p className='p-1 bg-indigo-600 hover:bg-indigo-300 italic transition-all rounded-md mt-2 mx-auto text-center'>Learn More</p>
                 </Link>
               </div>
@@ -163,7 +173,7 @@ export default function Main() {
           <p className='px-4 pt-2 hidden sm:block'> Data Visualisation</p>
           <div className="hover:scale-110 md:hover:scale-125 p-4 transition-all">
             <video ref={videoRefs[2]} className="opacity-90 object-cover border" loop muted>
-              <source src="/visualization.mp4" />
+              <source src="https://ducaqjqbmh7lv.cloudfront.net/mysite/visualization.mp4" />
             </video>
           </div>
           <div className='block md:hidden'>
@@ -180,7 +190,7 @@ export default function Main() {
                   <li>Twilio</li>
                   <li>AWS EC2</li>
                 </ul>
-                <Link href='/projects/custom'>
+                <Link href={{ pathname: '/projects/detail', query: { name: 'visualization'} }} passHref>
                   <p className='p-1 bg-indigo-600 hover:bg-indigo-300 italic transition-all rounded-md mt-2 mx-auto text-center'>Learn More</p>
                 </Link>
               </div>
@@ -204,7 +214,7 @@ export default function Main() {
               <li>Twilio</li>
               <li>AWS EC2</li>
             </ul>
-            <Link href='/projects/custom'>
+            <Link href={{ pathname: '/projects/detail', query: { name: 'visualization'} }} passHref>
               <p className='p-1 bg-indigo-600 hover:bg-indigo-300 italic transition-all rounded-md mt-2 mx-auto text-center'>Learn More</p>
             </Link>
           </div>

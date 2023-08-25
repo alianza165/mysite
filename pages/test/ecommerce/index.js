@@ -2,7 +2,7 @@ import { ClipboardDocumentCheckIcon, LockClosedIcon, ServerIcon, ArrowTrendingDo
 import Image from 'next/image';
 
 
-const details = [
+const ecommerce = [
   {
     name: 'Ecommerce / marketing template',
     backgroundImage: '/blur2.jpeg',
@@ -27,10 +27,84 @@ const details = [
   },
 ];
 
+const dashboard = [
+  {
+    name: 'Asset and Inventory Management',
+    backgroundImage: '/blur2.jpeg',
+    title: 'Dashboard',
+    description: 'Streamline your asset and inventory management with our dynamic dashboards. Seamlessly integrate teams, empower managers, and assess inventory at a glance. Plan for the future with data-backed insights, optimizing orders and operations for increased efficiency.',
+    icon1: '/react-2.svg',
+    icon2: '/rest.svg',
+    icon1_name: 'React',
+    icon2_name: 'Django Rest',
+    image1: '/dashboard.png',
+    image2: '/dashboard_mobile.png',
+    screenshot1: '/django.png',
+    screenshot2: '/dashboard.png',
+    screenshot3: '/ecommerce.png',
+    screenshot4: '/django.png',
+    developer_text: 'Our templates are thoughtfully crafted with the latest and greatest versions of the tools we love so that they are easy to maintain, and fun to actually work on.',
+    tech1: 'Next.js v13.4',
+    tech2: 'Django v4.2',
+    tech3: 'Tailwind CSS v3.3',
+    tech4: 'React v18',
+    tech5: 'AWS',
+  },
+];
+
+const visualization = [
+  {
+    name: 'Data Insights at a Glance',
+    backgroundImage: '/blur2.jpeg',
+    title: 'Visualization',
+    description: 'Unlock operational excellence through data visualization. Leverage AWS QuickSight to gain comprehensive insights instantly. Dive into data points, detect anomalies, and steer performance with precision. Elevate decision-making and efficiency, all from a single, intuitive interface.',
+    icon1: '/amazon-quicksight.svg',
+    icon2: '/postgresql.svg',
+    icon1_name: 'Amazon Quicksight',
+    icon2_name: 'PostgreSQL',
+    image1: '/ecommerce.png',
+    image2: '/ecommerce_mobile.png',
+    screenshot1: '/django.png',
+    screenshot2: '/dashboard.png',
+    screenshot3: '/ecommerce.png',
+    screenshot4: '/django.png',
+    developer_text: 'Our templates are thoughtfully crafted with the latest and greatest versions of the tools we love so that they are easy to maintain, and fun to actually work on.',
+    tech1: 'Next.js v13.4',
+    tech2: 'Django v4.2',
+    tech3: 'Tailwind CSS v3.3',
+    tech4: 'React v18',
+    tech5: 'AWS',
+  },
+];
+
+const management_tool = [
+  {
+    name: 'Streamlined Workflows, Enhanced Transparency',
+    backgroundImage: '/blur2.jpeg',
+    title: 'Management Tools',
+    description: 'Elevate productivity and transparency with our management tools. Streamline employee workflows, ensuring seamless processes and resource visibility. Empower teams to collaborate efficiently, optimizing operations and fostering growth in a well-organized ecosystem.',
+    icon1: '/django.svg',
+    icon2: '/postgresql.svg',
+    icon1_name: 'Django',
+    icon2_name: 'PostgreSQL',
+    image1: '/django.png',
+    image2: '/django_mobile.png',
+    screenshot1: '/django.png',
+    screenshot2: '/dashboard.png',
+    screenshot3: '/ecommerce.png',
+    screenshot4: '/django.png',
+    developer_text: 'Our templates are thoughtfully crafted with the latest and greatest versions of the tools we love so that they are easy to maintain, and fun to actually work on.',
+    tech1: 'Next.js v13.4',
+    tech2: 'Django v4.2',
+    tech3: 'Tailwind CSS v3.3',
+    tech4: 'React v18',
+    tech5: 'AWS',
+  },
+];
 
 export default function Ecommerce() {
   
-  const detail = details[0];
+  const detail = ecommerce[0];
 
   return (
     <div className="overflow-hidden bg-white pt-16 md:pt-24">

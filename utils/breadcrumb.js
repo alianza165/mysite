@@ -8,44 +8,31 @@ export default function Breadcrumb({ crumb }) {
       return (
       <div className="mt-4 ml-4 flex items-center">
         <Link href={{ pathname: '/'}} passHref>
-          <HomeIcon className="mb-3 w-6"/>
+          <HomeIcon className="mb-3 w-6 h-6"/>
         </Link>
-        <ChevronRightIcon className="mb-2 p-2 w-8 h-8"/>
+        <ChevronRightIcon className="mb-2 mx-4 w-5 h-5"/>
         <Link key={crumb.id} href={{ pathname: `${crumb.lastQueryPart}`}} passHref>
           <h6 className='p-2'>{crumb.lastQueryPart}</h6>
         </Link>
       </div>
     );
   } else if (numValues === 2) {
-  	if (crumb.cart_flag === "true") {
     return (
       <div className="mt-4 ml-4 flex items-center">
         <Link href={{ pathname: '/'}} passHref>
           <HomeIcon className="mb-3 w-6"/>
         </Link>
-        <ChevronRightIcon className="mb-2 p-2 w-8 h-8"/>
-        <Link key={crumb.id} href={{ pathname: '/item', query: { name: crumb.name, cart_flag:"true"} }} passHref>
-          <h6 className='p-2'>{crumb.name}</h6>
-        </Link>
-      </div>
-      );
-  } else {
-    return (
-      <div className="mt-4 ml-4 flex items-center">
-        <Link href={{ pathname: '/'}} passHref>
-          <HomeIcon className="mb-3 w-6"/>
-        </Link>
-        <ChevronRightIcon className="mb-2 p-2 w-8 h-8"/>
-        <Link key={crumb.id} href={{ pathname: `viewall/${crumb.query}`}} passHref>
+        <ChevronRightIcon className="mb-2 p-2 w-6 h-6"/>
+        <Link key={crumb.id} href={'/projects'} passHref>
           <h6 className='p-2'>{crumb.query}</h6>
         </Link>
-        <ChevronRightIcon className="mb-2 p-2 w-8 h-8"/>
+        <ChevronRightIcon className="mb-2 p-2 w-6 h-6"/>
         <Link key={crumb.id} href={{ pathname: `/${crumb.query}`, query: { name: crumb.name } }} passHref>
           <h6 className='p-2'>{crumb.name}</h6>
         </Link>
       </div>
 	   );
-  }} else if (numValues === 3) {
+  } else if (numValues === 3) {
     return (
       <div className="mt-4 ml-4 flex items-center">
         <Link href={{ pathname: '/'}} passHref>
