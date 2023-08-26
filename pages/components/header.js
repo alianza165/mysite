@@ -24,7 +24,7 @@ export default function Header() {
   return (
     <div
             className="bg-fixed bg-cover bg-center divide-neutral-300"
-            style={{ backgroundImage: `url(/tech1.png)` }}
+            style={{ backgroundImage: `url(https://ducaqjqbmh7lv.cloudfront.net/mysite/tech1.png)` }}
           >
 
     <Disclosure as="nav">

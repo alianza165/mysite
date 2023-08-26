@@ -10,7 +10,7 @@ export default function Breadcrumb({ crumb }) {
         <Link href={{ pathname: '/'}} passHref>
           <HomeIcon className="mb-3 w-6 h-6"/>
         </Link>
-        <ChevronRightIcon className="mb-2 mx-4 w-5 h-5"/>
+        <ChevronRightIcon className="mb-2 p-2 w-6 h-6"/>
         <Link key={crumb.id} href={{ pathname: `${crumb.lastQueryPart}`}} passHref>
           <h6 className='p-2'>{crumb.lastQueryPart}</h6>
         </Link>
