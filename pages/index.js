@@ -34,8 +34,12 @@ export default function Main() {
   const detail = details[0];
 
   return (
-    <div className="bg-gradient-to-tr from-slate-200">
+    <div>
     <Feature />
+    <div
+            className="bg-fixed bg-cover bg-center mt-8 divide-y pt-8 divide-neutral-300"
+            style={{ backgroundImage: `url(/tech1.png)` }}
+          >
     <div className="relative grid grid-cols-1 gap-x-6 gap-y-16 px-4 mt-16 md:px-12 md:grid-cols-2 md:gap-x-8">
         
         <div
@@ -226,6 +230,7 @@ export default function Main() {
                 View All
           </p>
         </Link>
+      </div>
       </div>
     </div>
   );

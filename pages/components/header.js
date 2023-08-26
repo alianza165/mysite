@@ -22,9 +22,12 @@ export default function Header() {
 
 
   return (
-    <div>
+    <div
+            className="bg-fixed bg-cover bg-center divide-neutral-300"
+            style={{ backgroundImage: `url(/tech1.png)` }}
+          >
 
-    <Disclosure as="nav" className="bg-blue-50">
+    <Disclosure as="nav">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
