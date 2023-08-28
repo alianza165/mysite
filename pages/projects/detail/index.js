@@ -2,6 +2,7 @@ import { ClipboardDocumentCheckIcon, LockClosedIcon, ServerIcon, ArrowTrendingDo
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Breadcrumb from '../../../utils/breadcrumb';
+import Link from 'next/link';
 
 
 const dictionaries = {
@@ -28,6 +29,7 @@ const dictionaries = {
     tech3: 'Tailwind CSS v3.3',
     tech4: 'React v18',
     tech5: 'AWS',
+    github: 'https://github.com/alianza165/tecliason',
   },
 ],
 
@@ -53,6 +55,7 @@ dashboard : [
     tech3: 'Tailwind CSS v3.3',
     tech4: 'React v18',
     tech5: 'AWS',
+    github: '#',
   },
 ],
 
@@ -78,6 +81,7 @@ visualization : [
     tech3: 'MQTT v5',
     tech4: 'Python v3.10',
     tech5: 'AWS S3',
+    github: '#',
   },
 ],
 
@@ -103,6 +107,7 @@ management_tool : [
     tech3: 'AWS EC2',
     tech4: 'jQuery v3.7',
     tech5: 'Bash 5.1',
+    github: '#',
   },
 ],
 }
@@ -127,7 +132,12 @@ export default function Ecommerce() {
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-6 md:gap-y-32 lg:mx-0 lg:max-w-none lg:grid-cols-3 px-6">
             <div className="lg:pr-8 lg:pt-4 col-span-1">
               <div className="lg:max-w-lg">
-                <h2 className="text-base font-semibold leading-7 text-sky-500">{detail.name}</h2>
+                <div className='flex items-center'>
+                  <h2 className="text-base font-semibold leading-7 text-sky-500">{detail.name}</h2>
+                  <Link href={detail.github}>
+                    <Image src={'/github.svg'} width={60} height={60} className='pl-4' />
+                  </Link>
+                </div>
                 <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{detail.title}</p>
                 <p className="mt-6 text-lg leading-8 text-gray-600">
                   {detail.description}
@@ -147,13 +157,13 @@ export default function Ecommerce() {
             <div  dir="rtl" className="col-span-2 pt-8 pl-8 pr-16">
               <Image
                 src={detail.image1}
-                className="border-black border rounded-md ring-offset-8 ring-slate-500 ring-2 hidden md:block"
+                className="border-slate-300 border rounded-md ring-offset-8 ring-slate-300 ring-2 hidden md:block"
                 width={5000}
                 height={5000}
               />
               <Image
                 src={detail.image2}
-                className="border-black border md:-mt-72 md:-mr-14 -mr-24 -mb-48 ring-offset-8 ring-slate-500 ring-2 rounded-md md:absolute "
+                className="border-slate-300 border md:-mt-72 md:-mr-14 -mr-24 -mb-48 ring-offset-8 ring-slate-300 ring-2 rounded-md md:absolute "
                 width={350}
                 height={350}
               />
@@ -167,10 +177,10 @@ export default function Ecommerce() {
             <p className='text-2xl font-bold col-span-1'> Screenshots </p>
             <div className='col-span-2'>
               <div className='grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-10'>
-                <Image src={detail.screenshot1} className="border-black border rounded-md" width={500} height={350} />
-                <Image src={detail.screenshot2} className="border-black border rounded-md" width={500} height={350} />
-                <Image src={detail.screenshot3} className="border-black border rounded-md" width={500} height={350} />
-                <Image src={detail.screenshot4} className="border-black border rounded-md" width={500} height={350} />
+                <Image src={detail.screenshot1} className="border-slate-300 border rounded-md" width={500} height={350} />
+                <Image src={detail.screenshot2} className="border-slate-300 border rounded-md" width={500} height={350} />
+                <Image src={detail.screenshot3} className="border-slate-300 border rounded-md" width={500} height={350} />
+                <Image src={detail.screenshot4} className="border-slate-300 border rounded-md" width={500} height={350} />
               </div>
             </div>
             </div>

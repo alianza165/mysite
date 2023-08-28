@@ -9,25 +9,29 @@ const projects = [
     name: 'Dashboard',
     description: 'Streamline your asset and inventory management with our dynamic dashboards. Seamlessly integrate teams, empower managers, and assess inventory at a glance. Plan for the future with data-backed insights, optimizing orders and operations for increased efficiency.',
     image: 'https://ducaqjqbmh7lv.cloudfront.net/mysite/dashboard_mobile.png',
-    link: 'dashboard'
+    link: 'dashboard',
+    github: '#',
   },
   {
     name: 'Data Visualization',
     description: 'Unlock operational excellence through data visualization. Leverage AWS QuickSight to gain comprehensive insights instantly. Dive into data points, detect anomalies, and steer performance with precision. Elevate decision-making and efficiency, all from a single, intuitive interface.',
     image: 'https://ducaqjqbmh7lv.cloudfront.net/mysite/datavisualization_mobile.png',
-    link: 'visualization'
+    link: 'visualization',
+    github: '#',
   },
   {
     name: 'E-Commerce',
     description: 'Experience the epitome of ecommerce brilliance with our Next.js, Tailwind, and Django API powered template. Seamlessly integrate your business, relishing stunning design and effortless functionality. Elevate your online presence today with easy integration and captivating aesthetics.',
     image: 'https://ducaqjqbmh7lv.cloudfront.net/mysite/ecommerce_mobile.png',
-    link: 'ecommerce'
+    link: 'ecommerce',
+    github: 'https://github.com/alianza165/tecliason',
   },
   {
     name: 'Workflow Management',
     description: 'Elevate productivity and transparency with our management tools. Streamline employee workflows, ensuring seamless processes and resource visibility. Empower teams to collaborate efficiently, optimizing operations and fostering growth in a well-organized ecosystem.',
     image: 'https://ducaqjqbmh7lv.cloudfront.net/mysite/django_mobile.png',
-    link: 'management_tool'
+    link: 'management_tool',
+    github: '#',
   },
 ];
 
@@ -48,7 +52,7 @@ export default function Projects() {
       <div className='text-center flex justify-center'>
         <div className='mx-8 my-8 md:mb-14 w-full md:w-1/2'>
           <p className='pb-4 text-blue-500'>Showcase</p>
-          <p className='pb-8 text-5xl font-sans font-bold'>Some Products that we have developed</p>
+          <p className='pb-8 text-5xl font-sans font-bold'>Start building from these templates</p>
           <p className='pb-4 font-sans font-thin'>Choose from this list of ever growing web tools</p>
         </div>      
       </div>
@@ -67,7 +71,14 @@ export default function Projects() {
             </Link>
             </div>
             <h3 className="mt-4 font-light line-clamp-2 leading-5 text-base text-gray-700 font-sans md:font-sans">{project.description}</h3>
-            <p className="mt-1 text-lg font-normal text-gray-900 font-['Open_Sans']">{project.name}</p>
+            <div class="flex items-center">
+              <div>
+                <p className="mt-1 text-lg font-normal text-gray-900 font-['Open_Sans']">{project.name}</p>
+              </div>
+              <Link href={project.github}>
+                <Image src={'/github.svg'} width={50} height={50} className='pl-4' />
+              </Link>
+            </div>
           </div>
         ))}
       </div>

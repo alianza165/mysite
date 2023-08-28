@@ -14,7 +14,7 @@ export default function MyApp(props) {
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-      <Header />
+      <Header classname='absolute'/>
         <Component {...pageProps} />
       <Footer />
     </div>
