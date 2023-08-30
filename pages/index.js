@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import Header from './components/header';
 import Body from './components/body';
 
-export default function App() {
-
+export default function App(theme) {
+  // console.log(theme)
 
   return (
     <div>
-      <Body />
+      <Body theme={theme} />
     </div>
   );
 }

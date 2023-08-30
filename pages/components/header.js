@@ -18,13 +18,18 @@ function classNames(...classes) {
 }
 
 
-export default function Header() {
+export default function Header({ toggleTheme, theme }) {
 
+  const logoClass = theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/logo_dark1.png' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/logo.png';
+  const bgImage = theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/dark_blur.jpg' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/tech1.png';
+  const strokeClass = theme === 'dark' ? "#ffffff" : "#2f2f2f";
+  const bgColor = theme === 'dark' ? "bg-white text-slate-900" : "bg-black text-white";
+  const bgClass = `url(${bgImage})`;
 
   return (
     <div
             className="bg-fixed bg-cover bg-center divide-neutral-300"
-            style={{ backgroundImage: `url(https://ducaqjqbmh7lv.cloudfront.net/mysite/tech1.png)` }}
+            style={{ backgroundImage: bgClass }}
           >
 
     <Disclosure as="nav">
@@ -39,7 +44,10 @@ export default function Header() {
                   {open ? (
                     <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
                   ) : (
-                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke={strokeClass} class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+
                   )}
                 </Disclosure.Button>
               </div>
@@ -47,32 +55,40 @@ export default function Header() {
               <Link href={{pathname: '/'}} passHref>
                   <Image
                     className="block w-auto lg:hidden"
-                    src="https://ducaqjqbmh7lv.cloudfront.net/mysite/logo.png"
+                    src={logoClass}
                     width={80}
                     height={20}
                   />
                   <Image
                     className="hidden w-auto lg:block"
-                    src="https://ducaqjqbmh7lv.cloudfront.net/mysite/logo.png"
+                    src={logoClass}
                     width={80}
                     height={20}
                   />
               </Link>
                 
               </div>
-
+              <div className="block md:hidden">
+                <select className={`px-1 pb-1 pt-2 rounded ${bgColor}`} id="themeToggle" onChange={toggleTheme}>
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                </select>
+              </div>
               <div className="hidden sm:block">
               <div className=" inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <select className= {`px-1 pb-1 pt-2 rounded ${bgColor}`} id="themeToggle" onChange={toggleTheme}>
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                </select>
                 <button
                   type="button"
-                  className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  className="ml-4 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 >
                   <span className="sr-only">View notifications</span>
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
                 </button>
-
                 {/* Profile dropdown */}
-                <Menu as="div" className="relative ml-3">
+                <Menu as="div" className="relative ml-3 ">
                   <div>
                     <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="sr-only">Open user menu</span>

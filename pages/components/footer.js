@@ -3,14 +3,16 @@ import { useState, useEffect } from "react";
 import Image from 'next/image';
 
 
-export default function Footer() {
+export default function Footer(theme) {
 
+  const themeClass2 = theme.theme === 'dark' ? 'text-white bg-black' : 'text-black bg-white';
+  const logoClass = theme.theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/logo_dark1.png' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/logo.png';
 
   return (
 
-    <div className='border-t mx-8 pt-8 h-56 '>
+    <div className={`border-t px-8 pt-8 h-56 ${themeClass2}`}>
       <div className='flex justify-center '>
-        <Image src='https://ducaqjqbmh7lv.cloudfront.net/mysite/logo.png' width={150} height={40} />
+        <Image src={logoClass} width={150} height={40} />
       </div>
       <div className='flex justify-center items-center'>
         <p className='py-8 font-thin'>© 2023 Epoch Labs Inc. All rights reserved.</p>
