@@ -34,7 +34,7 @@ export default function Feature(theme) {
           <div className="lg:pr-8 lg:pt-4">
             <div className="lg:max-w-lg">
               <h2 className="text-base font-semibold leading-7 text-sky-500">Partner with us</h2>
-              <p className={`mt-2 text-3xl font-bold tracking-tight sm:text-4xl ${themeFont1}`}>The Future is NOW</p>
+              <p className={`mt-2 text-3xl font-bold tracking-tight sm:text-4xl ${themeFont1}`}>The Future is WOW</p>
               <p className={`mt-6 text-lg leading-8 ${themeFont2}`}>
                 Information technology (IT) stands as a cornerstone of our future, enabling humanity to navigate the complexities of resource scarcity. As we strive to maximize resource efficiency, IT, particularly artificial intelligence (AI), emerges as a key ally
               </p>
