@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
-import Header from './components/header';
+import React from 'react';
 import Body from './components/body';
 
-export default function App(theme) {
-  // console.log(theme)
-
+export default function Home({ theme, isOpen }) {
   return (
     <div>
-      <Body theme={theme} />
+      <Body theme={theme} isOpen={isOpen} />
     </div>
   );
 }

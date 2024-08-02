@@ -38,7 +38,7 @@ const projects = [
   
 
 
-export default function Projects({ theme }) {
+export default function Projects({ theme, isOpen }) {
 
   const router = useRouter();
   const { name } = router.query;
@@ -53,11 +53,11 @@ export default function Projects({ theme }) {
   const logoClass = theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/github_dark.png' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/github.svg';
   const bgImage = theme ==='dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/dark_blur.jpg' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/tech1.png';
   const bgClass = `url(${bgImage})`;
-  // console.log(themeClass)
+  const marginLeft = isOpen ? 'md:ml-60' : 'md:ml-10';
 
 
   return (
-    <div className={`overflow-hidden pt-6 md:pt-10 pb-20 ${themeClass}`}>
+    <div className={`overflow-hidden pt-6 md:pt-10 pb-20 ${themeClass} ${marginLeft} transition-all duration-300`}>
       <Breadcrumb crumb={{ lastQueryPart }} />
       <div className='text-center flex justify-center'>
         <div className='mx-8 my-8 md:mb-14 w-full md:w-1/2'>

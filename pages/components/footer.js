@@ -3,14 +3,15 @@ import { useState, useEffect } from "react";
 import Image from 'next/image';
 
 
-export default function Footer(theme) {
+export default function Footer({theme, isOpen}) {
 
-  const themeClass2 = theme.theme === 'dark' ? 'text-white bg-black' : 'text-black bg-white';
-  const logoClass = theme.theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/logo_dark1.png' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/logo.png';
+  const themeClass2 = theme === 'dark' ? 'text-white bg-black' : 'text-black bg-white';
+  const logoClass = theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/logo_dark1.png' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/logo.png';
+  const marginLeft = isOpen ? 'md:ml-60' : 'md:ml-10';
 
   return (
 
-    <div className={`border-t px-8 pt-8 h-56 ${themeClass2}`}>
+    <div className={`border-t px-8 pt-8 h-56 ${themeClass2} ${marginLeft} transition-all duration-300`}>
       <div className='flex justify-center '>
         <Image src={logoClass} width={150} height={40} />
       </div>

@@ -107,7 +107,7 @@ management_tool : [
 ],
 }
 
-export default function Ecommerce(theme) {
+export default function Ecommerce({theme, isOpen}) {
 
   const router = useRouter();
   const { name } = router.query;
@@ -115,13 +115,14 @@ export default function Ecommerce(theme) {
   
   const detail = dictionaries[name]?.[0] || null;
 
-  const themeClass = theme.theme === 'dark' ? 'text-white bg-black' : 'text-black bg-white';
-  const themeFont1 = theme.theme === 'dark' ? 'text-gray-200' : 'text-gray-900';
-  const themeFont2 = theme.theme === 'dark' ? 'text-gray-400' : 'text-gray-600';
-  const imageClass = theme.theme === 'dark' ? 'brightness-90' : '';
-  const logoClass = theme.theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/github_dark.png' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/github.svg';
-  const bgImage = theme.theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/dark_blur.jpg' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/tech1.png';
+  const themeClass = theme === 'dark' ? 'text-white bg-black' : 'text-black bg-white';
+  const themeFont1 = theme === 'dark' ? 'text-gray-200' : 'text-gray-900';
+  const themeFont2 = theme === 'dark' ? 'text-gray-400' : 'text-gray-600';
+  const imageClass = theme === 'dark' ? 'brightness-90' : '';
+  const logoClass = theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/github_dark.png' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/github.svg';
+  const bgImage = theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/dark_blur.jpg' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/tech1.png';
   const bgClass = `url(${bgImage})`;
+  const marginLeft = isOpen ? 'md:ml-60' : 'md:ml-10';
 
 
   if (!detail) {
@@ -129,7 +130,7 @@ export default function Ecommerce(theme) {
   }
 
   return (
-    <div className={`overflow-hidden pt-6 md:pt-10 ${themeClass}`}>
+    <div className={`overflow-hidden pt-6 md:pt-10 ${themeClass} ${marginLeft} transition-all duration-300`}>
     <Breadcrumb crumb={{ query, name }} />
         <div className="mx-auto divide-y mt-6">
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-6 md:gap-y-32 lg:mx-0 lg:max-w-none lg:grid-cols-3 px-6">

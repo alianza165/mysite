@@ -20,12 +20,13 @@ const features = [
   },
 ];
 
-export default function Feature(theme) {
+export default function Feature({theme}) {
+  console.log(theme)
 
-  const themeClass = theme.theme === 'dark' ? 'bg-black' : 'bg-white';
-  const themeFont1 = theme.theme === 'dark' ? 'text-gray-200' : 'text-gray-900';
-  const themeFont2 = theme.theme === 'dark' ? 'text-gray-400' : 'text-gray-600';
-  const imageClass = theme.theme === 'dark' ? 'brightness-90' : '';
+  const themeClass = theme === 'dark' ? 'bg-black' : 'bg-white';
+  const themeFont1 = theme === 'dark' ? 'text-gray-200' : 'text-gray-900';
+  const themeFont2 = theme === 'dark' ? 'text-gray-400' : 'text-gray-600';
+  const imageClass = theme === 'dark' ? 'brightness-90' : '';
 
   return (
     <div className={`pt-8 overflow-hidden py-24 md:py-12 ${themeClass}`}>
@@ -40,9 +41,9 @@ export default function Feature(theme) {
               </p>
               <dl className={`mt-10 max-w-xl space-y-8 text-base leading-7 lg:max-w-none ${themeFont2}`}>
                 {features.map((feature) => (
-                  <div key={feature.name} className="relative pl-9">
+                  <div key={feature.name} className="">
                     <dt className={`inline font-semibold ${themeFont1}`}>
-                      <feature.icon className="absolute left-1 top-1 h-5 w-5 text-sky-500" aria-hidden="true" />
+                      <feature.icon className="left-1 top-1 h-5 w-5 text-sky-500" aria-hidden="true" />
                       {feature.name}
                     </dt>{' '}
                     <dd className="inline">{feature.description}</dd>
@@ -53,7 +54,7 @@ export default function Feature(theme) {
           </div>
           <Image
             src="https://ducaqjqbmh7lv.cloudfront.net/mysite/tech3.jpeg"
-            className={`mt-10 w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0 ${imageClass}`}
+            className={`mt-10 w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0`}
             width={5000}
             height={5000}
           />

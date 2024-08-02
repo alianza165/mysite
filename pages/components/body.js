@@ -4,12 +4,13 @@ import Feature from './feature';
 import Link from 'next/link';
 
 
-export default function Body(theme) {
+export default function Body({ theme, isOpen }) {
   const videoRefs = [
     useRef(null),
     useRef(null),
     useRef(null)
   ];
+
 
   const handleMouseEnter = (index) => {
     if (videoRefs[index].current) {
@@ -24,15 +25,16 @@ export default function Body(theme) {
     }
   };
 
-  const themeClass = theme.theme.theme === 'dark' ? 'text-white bg-black' : 'text-black bg-white';
-  const themeClass2 = theme.theme.theme === 'dark' ? 'text-black bg-white' : 'text-white bg-black';
-  const bgImage = theme.theme.theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/dark_blur2.jpg' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/tech1.png';
+  const themeClass = theme === 'dark' ? 'text-white bg-black' : 'text-black bg-white';
+  const themeClass2 = theme === 'dark' ? 'text-black bg-white' : 'text-white bg-black';
+  const bgImage = theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/dark_blur2.jpg' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/tech1.png';
   const bgClass = `url(${bgImage})`;
+  const marginLeft = isOpen ? 'md:ml-60' : 'md:ml-10';
 
 
   return (
-    <div>
-    <Feature theme={theme.theme.theme}/>
+    <div className={`${marginLeft} transition-all duration-300`}>
+    <Feature theme={theme}/>
     <div
       className="bg-fixed bg-cover bg-center pt-8 pt-8"
       style={{ backgroundImage: bgClass }}
@@ -199,7 +201,7 @@ export default function Body(theme) {
           </div>
         </div>
         <div className='hidden sm:block'>
-          <div className='border -mb-6 p-2 mx-auto text-center text-white w-40 relative skew-x-6 bg-black '>
+          <div className='border -mb-6 p-2 mx-auto text-center text-white w-40 skew-x-6 bg-black '>
             Data Visualisation
           </div>
         <div className={`p-8 md:p-12 border grid gap-x-4 gap-y-8 grid-cols-1 md:grid-cols-3 md:gap-x-4 ${themeClass}`}>
