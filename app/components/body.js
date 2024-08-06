@@ -1,15 +1,19 @@
+"use client"
+
 import { useState, useEffect, useRef } from "react";
 import Image from 'next/image';
 import Feature from './feature';
 import Link from 'next/link';
+import { useAppContext } from '../context/AppContext';
 
 
-export default function Body({ theme, isOpen }) {
+export default function Body() {
   const videoRefs = [
     useRef(null),
     useRef(null),
     useRef(null)
   ];
+  const { theme, isOpen } = useAppContext();
 
 
   const handleMouseEnter = (index) => {

@@ -1,8 +1,10 @@
+'use client';
+
 import { ClipboardDocumentCheckIcon, LockClosedIcon, ServerIcon, ArrowTrendingDownIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Breadcrumb from '../../../utils/breadcrumb';
-
+import { useAppContext } from '../../context/AppContext';
 
 const dictionaries = {
 
@@ -107,11 +109,11 @@ management_tool : [
 ],
 }
 
-export default function Ecommerce({theme, isOpen}) {
+export default function Ecommerce() {
 
-  const router = useRouter();
-  const { name } = router.query;
+  const name = useSearchParams().get('name');
   const query = 'projects'
+  const { theme, isOpen } = useAppContext();
   
   const detail = dictionaries[name]?.[0] || null;
 

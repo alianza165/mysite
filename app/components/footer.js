@@ -1,9 +1,10 @@
 import Link from 'next/link';
 import { useState, useEffect } from "react";
 import Image from 'next/image';
+import { useAppContext } from '../context/AppContext';
 
-
-export default function Footer({theme, isOpen}) {
+export default function Footer() {
+  const { theme, isOpen } = useAppContext();
 
   const themeClass2 = theme === 'dark' ? 'text-white bg-black' : 'text-black bg-white';
   const logoClass = theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/logo_dark1.png' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/logo.png';

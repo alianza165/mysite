@@ -5,6 +5,7 @@ import { Bars3Icon, BellIcon, XMarkIcon, SunIcon, MoonIcon } from '@heroicons/re
 import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useAppContext } from '../context/AppContext';
 
 const navigation = [
 
@@ -18,7 +19,9 @@ function classNames(...classes) {
 }
 
 
-export default function Header({ toggleTheme, theme, isOpen, toggleSidebar }) {
+export default function Header() {
+
+  const { theme, isOpen, toggleSidebar,toggleTheme } = useAppContext();
 
   const logoClass = theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/logo_dark1.png' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/logo.png';
   const bgImage = theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/dark_blur.jpg' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/tech1.png';

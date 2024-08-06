@@ -1,8 +1,11 @@
+'use client'
+
 import { ClipboardDocumentCheckIcon, LockClosedIcon, ServerIcon, ArrowTrendingDownIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image';
 import Link from 'next/link';
 import Breadcrumb from '../../utils/breadcrumb';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
+import { useAppContext } from '../context/AppContext';
 
 const projects = [
   {
@@ -38,13 +41,13 @@ const projects = [
   
 
 
-export default function Projects({ theme, isOpen }) {
+export default function Projects() {
 
-  const router = useRouter();
-  const { name } = router.query;
-  const query = router.route;
+  const router = usePathname();
+  const query = router;
   const queryParts = query.split('/');
   const lastQueryPart = queryParts[queryParts.length - 1];
+  const { theme, isOpen } = useAppContext();
 
   const themeClass = theme === 'dark' ? 'text-white bg-black' : 'text-black bg-white';
   const themeFont1 = theme === 'dark' ? 'text-gray-200' : 'text-gray-900';
@@ -54,6 +57,7 @@ export default function Projects({ theme, isOpen }) {
   const bgImage = theme ==='dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/dark_blur.jpg' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/tech1.png';
   const bgClass = `url(${bgImage})`;
   const marginLeft = isOpen ? 'md:ml-60' : 'md:ml-10';
+
 
 
   return (

@@ -20,13 +20,12 @@ const features = [
   },
 ];
 
-export default function Feature({theme}) {
-  console.log(theme)
+export default function Feature(theme) {
 
-  const themeClass = theme === 'dark' ? 'bg-black' : 'bg-white';
-  const themeFont1 = theme === 'dark' ? 'text-gray-200' : 'text-gray-900';
-  const themeFont2 = theme === 'dark' ? 'text-gray-400' : 'text-gray-600';
-  const imageClass = theme === 'dark' ? 'brightness-90' : '';
+  const themeClass = theme.theme === 'dark' ? 'bg-black' : 'bg-white';
+  const themeFont1 = theme.theme === 'dark' ? 'text-gray-200' : 'text-gray-900';
+  const themeFont2 = theme.theme === 'dark' ? 'text-gray-400' : 'text-gray-600';
+  const imageClass = theme.theme === 'dark' ? 'brightness-90' : '';
 
   return (
     <div className={`pt-8 overflow-hidden py-24 md:py-12 ${themeClass}`}>
