@@ -1,9 +1,9 @@
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from 'axios';
 
-const options = ({
+const options: AuthOptions = ({
   providers: [
     GoogleProvider({
       clientId: process.env.AUTH_GOOGLE_ID,
@@ -20,8 +20,8 @@ const options = ({
           const response = await axios.post(
             'http://3.226.46.93:8000/accounts/token/',
             {
-              username: credentials.email,
-              password: credentials.password,
+              username: credentials?.email,
+              password: credentials?.password,
             },
             {
               headers: {
@@ -32,10 +32,11 @@ const options = ({
 
           if (response.status === 200) {
             const { access, refresh } = response.data;
+            // Return the user object that matches the NextAuth structure
             return {
+              email: credentials.email,
               accessToken: access,
               refreshToken: refresh,
-              user: { email: credentials.email }, // You can include more user info here if available
             };
           } else {
             return null; // Return null if credentials are invalid
@@ -78,29 +79,29 @@ callbacks: {
           const errorData = await response.json();
           console.error('Google sign-in failed:', errorData);
           token.error = "GOOGLE_SIGNIN_FAILED"; // Set a custom error
-          session.isAuthenticated = false;
           return token;
         }
 
         const data = await response.json();
 
+        // Ensuring the structure matches User type
         token.accessToken = data.access_token;  // Store the JWT access token
         token.refreshToken = data.refresh_token;  // Store the JWT refresh token
         token.accessTokenExpires = Date.now() + 300 * 1000;  // Assuming 1 hour expiry
-        token.user = user;
+        token.user = { email: user?.email }; // You can add more fields if available
       } catch (error) {
         console.error('Error fetching JWT token:', error);
         token.error = "GOOGLE_SIGNIN_FAILED";
         return token;
       }
-    } 
+    }
 
     // Handle Credentials sign-in
     if (user && account?.provider === 'credentials') {
       token.accessToken = user.accessToken;
       token.refreshToken = user.refreshToken;
       token.accessTokenExpires = Date.now() + 300 * 1000;
-      token.user = user;
+      token.user = { email: user?.email }; // Make sure this matches the User type
     }
 
     // Return the token so it can be stored in the JWT
