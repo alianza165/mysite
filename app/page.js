@@ -1,8 +1,7 @@
 import React from 'react';
 import Body from './components/body';
 
-export default function Home({ theme, isOpen }) {
-  console.log(theme);
+export default function Home() {
   return (
     <div>
       <Body />
