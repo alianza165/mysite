@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from 'axios';
 
-const options: AuthOptions = ({
+const options = ({
   providers: [
     GoogleProvider({
       clientId: process.env.AUTH_GOOGLE_ID,
