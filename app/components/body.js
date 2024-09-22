@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react";
+import { useRef } from "react";
 import Image from 'next/image';
 import Feature from './feature';
 import Link from 'next/link';

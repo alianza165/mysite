@@ -1,5 +1,6 @@
 import { ClipboardDocumentCheckIcon, LockClosedIcon, ServerIcon, ArrowTrendingDownIcon } from '@heroicons/react/20/solid'
 import Image from 'next/image';
+import ModelViewer from './ModelViewer';
 
 const features = [
   {
