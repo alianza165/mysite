@@ -1,144 +1,142 @@
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
-import axios from 'axios';
+import NextAuth from "next-auth"
+import "next-auth/jwt"
 
-const options = ({
+import Apple from "next-auth/providers/apple"
+import Auth0 from "next-auth/providers/auth0"
+import AzureB2C from "next-auth/providers/azure-ad-b2c"
+import BankIDNorway from "next-auth/providers/bankid-no"
+import BoxyHQSAML from "next-auth/providers/boxyhq-saml"
+import Cognito from "next-auth/providers/cognito"
+import Coinbase from "next-auth/providers/coinbase"
+import Discord from "next-auth/providers/discord"
+import Dropbox from "next-auth/providers/dropbox"
+import Facebook from "next-auth/providers/facebook"
+import GitHub from "next-auth/providers/github"
+import GitLab from "next-auth/providers/gitlab"
+import Google from "next-auth/providers/google"
+import Hubspot from "next-auth/providers/hubspot"
+import Keycloak from "next-auth/providers/keycloak"
+import LinkedIn from "next-auth/providers/linkedin"
+import Netlify from "next-auth/providers/netlify"
+import Okta from "next-auth/providers/okta"
+import Passage from "next-auth/providers/passage"
+import Passkey from "next-auth/providers/passkey"
+import Pinterest from "next-auth/providers/pinterest"
+import Reddit from "next-auth/providers/reddit"
+import Slack from "next-auth/providers/slack"
+import Spotify from "next-auth/providers/spotify"
+import Twitch from "next-auth/providers/twitch"
+import Twitter from "next-auth/providers/twitter"
+import Vipps from "next-auth/providers/vipps"
+import WorkOS from "next-auth/providers/workos"
+import Zoom from "next-auth/providers/zoom"
+import { createStorage } from "unstorage"
+import memoryDriver from "unstorage/drivers/memory"
+import vercelKVDriver from "unstorage/drivers/vercel-kv"
+import { UnstorageAdapter } from "@auth/unstorage-adapter"
+import type { NextAuthConfig } from "next-auth"
+
+const storage = createStorage({
+  driver: process.env.VERCEL
+    ? vercelKVDriver({
+        url: process.env.AUTH_KV_REST_API_URL,
+        token: process.env.AUTH_KV_REST_API_TOKEN,
+        env: false,
+      })
+    : memoryDriver(),
+})
+
+const config = {
+  theme: { logo: "https://authjs.dev/img/logo-sm.png" },
+  adapter: UnstorageAdapter(storage),
   providers: [
-    GoogleProvider({
-      clientId: process.env.AUTH_GOOGLE_ID,
-      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    Apple,
+    Auth0,
+    AzureB2C({
+      clientId: process.env.AUTH_AZURE_AD_B2C_ID,
+      clientSecret: process.env.AUTH_AZURE_AD_B2C_SECRET,
+      issuer: process.env.AUTH_AZURE_AD_B2C_ISSUER,
     }),
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+    BankIDNorway,
+    BoxyHQSAML({
+      clientId: "dummy",
+      clientSecret: "dummy",
+      issuer: process.env.AUTH_BOXYHQ_SAML_ISSUER,
+    }),
+    Cognito,
+    Coinbase,
+    Discord,
+    Dropbox,
+    Facebook,
+    GitHub,
+    GitLab,
+    Google,
+    Hubspot,
+    Keycloak({ name: "Keycloak (bob/bob)" }),
+    LinkedIn,
+    Netlify,
+    Okta,
+    Passkey({
+      formFields: {
+        email: {
+          label: "Username",
+          required: true,
+          autocomplete: "username webauthn",
+        },
       },
-      async authorize(credentials) {
-        try {
-          const response = await axios.post(
-            'http://3.226.46.93:8000/accounts/token/',
-            {
-              username: credentials?.email,
-              password: credentials?.password,
-            },
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
-          );
-
-          if (response.status === 200) {
-            const { access, refresh } = response.data;
-            // Return the user object that matches the NextAuth structure
-            return {
-              email: credentials.email,
-              accessToken: access,
-              refreshToken: refresh,
-            };
-          } else {
-            return null; // Return null if credentials are invalid
-          }
-        } catch (error) {
-          // Handle specific backend error
-          if (error.response?.data?.email?.includes("Email is already registered")) {
-            throw new Error("EMAIL_ALREADY_REGISTERED_CREDENTIALS");
-          }
-          console.error("Authorization error:", error);
-          return null; // Return null if there's an error
-        }
-      }
     }),
+    Passage,
+    Pinterest,
+    Reddit,
+    Slack,
+    Spotify,
+    Twitch,
+    Twitter,
+    Vipps({
+      issuer: "https://apitest.vipps.no/access-management-1.0/access/",
+    }),
+    WorkOS({
+      connection: process.env.AUTH_WORKOS_CONNECTION!,
+    }),
+    Zoom,
   ],
-  session: {
-    jwt: true,
-  },
-  jwt: {
-    secret: process.env.AUTH_SECRET,
-    encryption: true,
-  },
-callbacks: {
-  async jwt({ token, account, user }) {
-    // Handle Google sign-in
-    if (account && account.provider === 'google') {
-      try {
-        const response = await fetch('http://3.226.46.93:8000/accounts/google/', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${account.access_token}`, // Google access token
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: user?.email,  // Assuming the email is available in the `user` object
-          }),
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          console.error('Google sign-in failed:', errorData);
-          token.error = "GOOGLE_SIGNIN_FAILED"; // Set a custom error
-          return token;
-        }
-
-        const data = await response.json();
-
-        // Ensuring the structure matches User type
-        token.accessToken = data.access_token;  // Store the JWT access token
-        token.refreshToken = data.refresh_token;  // Store the JWT refresh token
-        token.accessTokenExpires = Date.now() + 300 * 1000;  // Assuming 1 hour expiry
-        token.user = { email: user?.email }; // You can add more fields if available
-      } catch (error) {
-        console.error('Error fetching JWT token:', error);
-        token.error = "GOOGLE_SIGNIN_FAILED";
-        return token;
+  basePath: "/auth",
+  callbacks: {
+    authorized({ request, auth }) {
+      const { pathname } = request.nextUrl
+      if (pathname === "/middleware-example") return !!auth
+      return true
+    },
+    jwt({ token, trigger, session, account }) {
+      if (trigger === "update") token.name = session.user.name
+      if (account?.provider === "keycloak") {
+        return { ...token, accessToken: account.access_token }
       }
-    }
-
-    // Handle Credentials sign-in
-    if (user && account?.provider === 'credentials') {
-      token.accessToken = user.accessToken;
-      token.refreshToken = user.refreshToken;
-      token.accessTokenExpires = Date.now() + 300 * 1000;
-      token.user = { email: user?.email }; // Make sure this matches the User type
-    }
-
-    // Return the token so it can be stored in the JWT
-    return token;
+      return token
+    },
+    async session({ session, token }) {
+      if (token?.accessToken) {
+        session.accessToken = token.accessToken
+      }
+      return session
+    },
   },
-
-  async session({ session, token }) {
-    if (token.error) {
-      session.error = token.error;
-      session.isAuthenticated = false;
-    } else {
-      session.user = token.user;
-      session.accessToken = token.accessToken;
-      session.refreshToken = token.refreshToken;
-      session.accessTokenExpires = token.accessTokenExpires;
-      session.isAuthenticated = true;
-    }
-    return session;
+  experimental: {
+    enableWebAuthn: true,
   },
+  debug: process.env.NODE_ENV !== "production" ? true : false,
+} satisfies NextAuthConfig
 
-  async redirect({ url, baseUrl }) {
-    // Handle the custom error and redirect to the login page with the appropriate message
-    if (url.includes("/signin") && url.includes("error=GOOGLE_SIGNIN_FAILED")) {
-      return `${baseUrl}/signin?error=Google sign-in failed. Please try again.`;
-    }
-    if (url.includes("/signin") && url.includes("error=EMAIL_ALREADY_REGISTERED_GOOGLE")) {
-      return `${baseUrl}/signin?error=This email is already being used with another login method.`;
-    }
-    if (url.includes("/signin") && url.includes("error=EMAIL_ALREADY_REGISTERED_CREDENTIALS")) {
-      return `${baseUrl}/signin?error=This email is already being used with another login method.`;
-    }
-    return url;
-  },
-},
-  pages: {
-    signIn: '/', // Redirect to the sign-in page on error
-  },
-});
+export const { handlers, auth, signIn, signOut } = NextAuth(config)
 
-export const { handlers, signIn, signOut, auth } = NextAuth(options)
+declare module "next-auth" {
+  interface Session {
+    accessToken?: string
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    accessToken?: string
+  }
+}
