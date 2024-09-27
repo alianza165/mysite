@@ -4,7 +4,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg my-10">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Privacy Policy</h1>
-      <p className="mb-4 text-gray-600">Last updated: [Date]</p>
+      <p className="mb-4 text-gray-600">Last updated: 27-Sept-2024</p>
 
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">1. Information We Collect</h2>
@@ -54,7 +54,7 @@ const PrivacyPolicy = () => {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">7. Requesting Data Rectification or Deletion</h2>
         <p className="mb-2 text-gray-600">
-          You have the right to request the rectification or deletion of your data at any time. To do so, please contact us at [Your Contact Email], and we will process your request promptly.
+          You have the right to request the rectification or deletion of your data at any time. To do so, please contact us at syedalianza@gmail.com, and we will process your request promptly.
         </p>
       </section>
 
@@ -89,7 +89,7 @@ const PrivacyPolicy = () => {
       <section className="mb-8">
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">12. Contact Us</h2>
         <p className="mb-2 text-gray-600">
-          If you have any questions about this Privacy Policy or wish to request data rectification or deletion, please contact us at [Your Contact Email].
+          If you have any questions about this Privacy Policy or wish to request data rectification or deletion, please contact us at syedalianza@gmail.com.
         </p>
       </section>
     </div>
