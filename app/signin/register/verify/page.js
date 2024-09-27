@@ -3,12 +3,21 @@
 import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import { useAppContext } from '../../../context/AppContext';
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from 'next/navigation';
 import axios from 'axios';
 import { useMessage } from '../../../context/MessageContext';
 
+
 export default function SignUpComponent() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <InnerSignUpComponent />
+    </Suspense>
+  );
+}
+
+function InnerSignUpComponent() {
   const router = useRouter();
   const { setSuccessMessage } = useMessage();
   const { theme, isOpen } = useAppContext();

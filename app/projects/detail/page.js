@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Breadcrumb from '../../../utils/breadcrumb';
 import { useAppContext } from '../../context/AppContext';
+import { Suspense } from 'react'
 
 const dictionaries = {
 
@@ -110,6 +111,14 @@ management_tool : [
 }
 
 export default function Ecommerce() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <InnerEcommerce />
+    </Suspense>
+  );
+}
+
+function InnerEcommerce() {
 
   const name = useSearchParams().get('name');
   const query = 'projects'
