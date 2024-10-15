@@ -1,142 +1,101 @@
-import NextAuth from "next-auth"
-import "next-auth/jwt"
+import NextAuth, { User } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
+import axios from 'axios';
 
-import Apple from "next-auth/providers/apple"
-import Auth0 from "next-auth/providers/auth0"
-import AzureB2C from "next-auth/providers/azure-ad-b2c"
-import BankIDNorway from "next-auth/providers/bankid-no"
-import BoxyHQSAML from "next-auth/providers/boxyhq-saml"
-import Cognito from "next-auth/providers/cognito"
-import Coinbase from "next-auth/providers/coinbase"
-import Discord from "next-auth/providers/discord"
-import Dropbox from "next-auth/providers/dropbox"
-import Facebook from "next-auth/providers/facebook"
-import GitHub from "next-auth/providers/github"
-import GitLab from "next-auth/providers/gitlab"
-import Google from "next-auth/providers/google"
-import Hubspot from "next-auth/providers/hubspot"
-import Keycloak from "next-auth/providers/keycloak"
-import LinkedIn from "next-auth/providers/linkedin"
-import Netlify from "next-auth/providers/netlify"
-import Okta from "next-auth/providers/okta"
-import Passage from "next-auth/providers/passage"
-import Passkey from "next-auth/providers/passkey"
-import Pinterest from "next-auth/providers/pinterest"
-import Reddit from "next-auth/providers/reddit"
-import Slack from "next-auth/providers/slack"
-import Spotify from "next-auth/providers/spotify"
-import Twitch from "next-auth/providers/twitch"
-import Twitter from "next-auth/providers/twitter"
-import Vipps from "next-auth/providers/vipps"
-import WorkOS from "next-auth/providers/workos"
-import Zoom from "next-auth/providers/zoom"
-import { createStorage } from "unstorage"
-import memoryDriver from "unstorage/drivers/memory"
-import vercelKVDriver from "unstorage/drivers/vercel-kv"
-import { UnstorageAdapter } from "@auth/unstorage-adapter"
-import type { NextAuthConfig } from "next-auth"
+interface CustomUser extends User {
+  accessToken: string;
+  refreshToken: string;
+}
 
-const storage = createStorage({
-  driver: process.env.VERCEL
-    ? vercelKVDriver({
-        url: process.env.AUTH_KV_REST_API_URL,
-        token: process.env.AUTH_KV_REST_API_TOKEN,
-        env: false,
-      })
-    : memoryDriver(),
-})
-
-const config = {
-  theme: { logo: "https://authjs.dev/img/logo-sm.png" },
-  adapter: UnstorageAdapter(storage),
+const options = {
   providers: [
-    Apple,
-    Auth0,
-    AzureB2C({
-      clientId: process.env.AUTH_AZURE_AD_B2C_ID,
-      clientSecret: process.env.AUTH_AZURE_AD_B2C_SECRET,
-      issuer: process.env.AUTH_AZURE_AD_B2C_ISSUER,
+    GoogleProvider({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
     }),
-    BankIDNorway,
-    BoxyHQSAML({
-      clientId: "dummy",
-      clientSecret: "dummy",
-      issuer: process.env.AUTH_BOXYHQ_SAML_ISSUER,
-    }),
-    Cognito,
-    Coinbase,
-    Discord,
-    Dropbox,
-    Facebook,
-    GitHub,
-    GitLab,
-    Google,
-    Hubspot,
-    Keycloak({ name: "Keycloak (bob/bob)" }),
-    LinkedIn,
-    Netlify,
-    Okta,
-    Passkey({
-      formFields: {
-        email: {
-          label: "Username",
-          required: true,
-          autocomplete: "username webauthn",
-        },
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
       },
-    }),
-    Passage,
-    Pinterest,
-    Reddit,
-    Slack,
-    Spotify,
-    Twitch,
-    Twitter,
-    Vipps({
-      issuer: "https://apitest.vipps.no/access-management-1.0/access/",
-    }),
-    WorkOS({
-      connection: process.env.AUTH_WORKOS_CONNECTION!,
-    }),
-    Zoom,
-  ],
-  basePath: "/auth",
-  callbacks: {
-    authorized({ request, auth }) {
-      const { pathname } = request.nextUrl
-      if (pathname === "/middleware-example") return !!auth
-      return true
-    },
-    jwt({ token, trigger, session, account }) {
-      if (trigger === "update") token.name = session.user.name
-      if (account?.provider === "keycloak") {
-        return { ...token, accessToken: account.access_token }
+      async authorize(credentials) {
+        try {
+          const response = await axios.post(
+            'http://3.226.46.93:8000/accounts/token/',
+            {
+              username: credentials.email,
+              password: credentials.password,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+
+          if (response.status === 200) {
+            const { access, refresh } = response.data;
+            return { email: credentials.email as string };
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.error("Authorization error:", error);
+          return null;
+        }
       }
-      return token
+    }),
+  ],
+  session: {
+    strategy: 'jwt' as const,
+  },
+  secret: process.env.AUTH_SECRET,
+  callbacks: {
+    async jwt({ token, account, user }) {
+      if (account && account.provider === 'google') {
+        const response = await fetch('http://3.226.46.93:8000/accounts/google/', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${account.access_token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: user?.email,
+          }),
+        });
+        const data = await response.json();
+        token.accessToken = data.access_token;
+        token.refreshToken = data.refresh_token;
+        token.accessTokenExpires = Date.now() + 300 * 1000;
+        token.user = user;
+      }
+      if (user && account?.provider === 'credentials') {
+        token.accessToken = user.accessToken;
+        token.refreshToken = user.refreshToken;
+        token.accessTokenExpires = Date.now() + 300 * 1000;
+        token.user = user;
+      }
+      return token;
     },
     async session({ session, token }) {
-      if (token?.accessToken) {
-        session.accessToken = token.accessToken
+      if (token.error) {
+        session.error = token.error;
+        session.isAuthenticated = false;
+      } else {
+        session.user = token.user;
+        session.accessToken = token.accessToken;
+        session.refreshToken = token.refreshToken;
+        session.accessTokenExpires = token.accessTokenExpires;
+        session.isAuthenticated = true;
       }
-      return session
+      return session;
     },
   },
-  experimental: {
-    enableWebAuthn: true,
+  pages: {
+    signIn: '/signin',
   },
-  debug: process.env.NODE_ENV !== "production" ? true : false,
-} satisfies NextAuthConfig
+};
 
-export const { handlers, auth, signIn, signOut } = NextAuth(config)
-
-declare module "next-auth" {
-  interface Session {
-    accessToken?: string
-  }
-}
-
-declare module "next-auth/jwt" {
-  interface JWT {
-    accessToken?: string
-  }
-}
+export const { handlers, signIn, signOut, auth } = NextAuth(options);

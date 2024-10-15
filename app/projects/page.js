@@ -1,103 +1,140 @@
-'use client'
+import React from 'react';
 
-import { ClipboardDocumentCheckIcon, LockClosedIcon, ServerIcon, ArrowTrendingDownIcon } from '@heroicons/react/20/solid'
-import Image from 'next/image';
-import Link from 'next/link';
-import Breadcrumb from '../../utils/breadcrumb';
-import { usePathname } from 'next/navigation';
-import { useAppContext } from '../context/AppContext';
-
-const projects = [
-  {
-    name: 'Dashboard',
-    description: 'Streamline your asset and inventory management with our dynamic dashboards. Seamlessly integrate teams, empower managers, and assess inventory at a glance. Plan for the future with data-backed insights, optimizing orders and operations for increased efficiency.',
-    image: 'https://ducaqjqbmh7lv.cloudfront.net/mysite/dashboard_mobile.png',
-    link: 'dashboard',
-    github: '',
-  },
-  {
-    name: 'Data Visualization',
-    description: 'Unlock operational excellence through data visualization. Leverage AWS QuickSight to gain comprehensive insights instantly. Dive into data points, detect anomalies, and steer performance with precision. Elevate decision-making and efficiency, all from a single, intuitive interface.',
-    image: 'https://ducaqjqbmh7lv.cloudfront.net/mysite/datavisualization_mobile.png',
-    link: 'visualization',
-    github: '',
-  },
-  {
-    name: 'E-Commerce',
-    description: 'Experience the epitome of ecommerce brilliance with our Next.js, Tailwind, and Django API powered template. Seamlessly integrate your business, relishing stunning design and effortless functionality. Elevate your online presence today with easy integration and captivating aesthetics.',
-    image: 'https://ducaqjqbmh7lv.cloudfront.net/mysite/ecommerce_mobile.png',
-    link: 'ecommerce',
-    github: '',
-  },
-  {
-    name: 'Workflow Management',
-    description: 'Elevate productivity and transparency with our management tools. Streamline employee workflows, ensuring seamless processes and resource visibility. Empower teams to collaborate efficiently, optimizing operations and fostering growth in a well-organized ecosystem.',
-    image: 'https://ducaqjqbmh7lv.cloudfront.net/mysite/django_mobile.png',
-    link: 'management_tool',
-    github: '',
-  },
-];
-
-  
-
-
-export default function Projects() {
-
-  const router = usePathname();
-  const query = router;
-  const queryParts = query.split('/');
-  const lastQueryPart = queryParts[queryParts.length - 1];
-  const { theme, isOpen } = useAppContext();
-
-  const themeClass = theme === 'dark' ? 'text-white bg-black' : 'text-black bg-white';
-  const themeFont1 = theme === 'dark' ? 'text-gray-200' : 'text-gray-900';
-  const themeFont2 = theme === 'dark' ? 'text-gray-400' : 'text-gray-600';
-  const imageClass = theme === 'dark' ? 'brightness-90' : '';
-  const logoClass = theme === 'dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/github_dark.png' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/github.svg';
-  const bgImage = theme ==='dark' ? 'https://ducaqjqbmh7lv.cloudfront.net/mysite/dark_blur.jpg' : 'https://ducaqjqbmh7lv.cloudfront.net/mysite/tech1.png';
-  const bgClass = `url(${bgImage})`;
-  const marginLeft = isOpen ? 'md:ml-60' : 'md:ml-10';
-
-
-
+const Homepage = () => {
   return (
-    <div className={`overflow-hidden pt-6 md:pt-10 pb-20 ${themeClass} ${marginLeft} transition-all duration-300`}>
-      <Breadcrumb crumb={{ lastQueryPart }} />
-      <div className='text-center flex justify-center'>
-        <div className='mx-8 my-8 md:mb-14 w-full md:w-1/2'>
-          <p className='pb-4 text-blue-500'>Showcase</p>
-          <p className='pb-8 text-5xl font-sans font-bold'>Start building from these templates</p>
-          <p className='pb-4 font-sans font-thin'>Choose from this list of ever growing web tools</p>
-        </div>      
-      </div>
-      <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 mx-4 md:mx-8 mt-8">
-        {projects.map((project) => (
-          <div>
-          <div className='hover:drop-shadow-2xl hover:scale-105 transition-all'>
-            <Link key={project.id} href={{ pathname: '/projects/detail', query: { name: project.link} }} passHref>
-              <div 
-              className="shadow aspect-h-1 aspect-w-1 overflow-hidden rounded-lg xl:aspect-h-8 xl:aspect-w-7"
-              style={{ backgroundImage: bgClass }}
-              >
-                <Image
-                  src={project.image}
-                  width={300} height={200}
-                  className={`object-contain object-center group-hover:opacity-75 p-2 md:p-3 ${imageClass}`}
-                />
-              </div>
-            </Link>
-            </div>
-            <h3 className={`mt-4 font-light line-clamp-2 leading-5 text-base font-sans md:font-sans ${themeFont2}`}>{project.description}</h3>
-            <div class="flex items-center">
-              <div>
-                <p className={`mt-1 text-lg font-normal font-['Open_Sans'] ${themeFont1}`}>{project.name}</p>
-              </div>
-              <Image src={logoClass} width={60} height={60} className='pl-4' />
-            </div>
+    <div className="bg-gray-100">
+      {/* Header */}
+      <header className="bg-navy p-4 flex justify-between items-center">
+        <div className="text-white">Logo</div>
+        <nav className="space-x-6">
+          <a href="#products" className="text-white">Products</a>
+          <a href="#solutions" className="text-white">Solutions</a>
+          <a href="#projects" className="text-white">Projects</a>
+          <a href="#brands" className="text-white">Brands</a>
+          <a href="#blog" className="text-white">Blog</a>
+        </nav>
+        <button className="bg-orange-500 text-white px-4 py-2 rounded">Search</button>
+      </header>
+
+      {/* Hero Section */}
+      <section className="bg-teal-500 text-white text-center py-16">
+        <h1 className="text-4xl font-bold">Explore Our Products</h1>
+        <button className="mt-6 bg-orange-500 text-white px-6 py-2 rounded">Contact Us</button>
+      </section>
+
+      {/* Featured Products Section */}
+      <section id="products" className="py-16">
+        <h2 className="text-teal-500 text-center text-3xl font-bold mb-10">Products</h2>
+        <div className="grid grid-cols-3 gap-8">
+          <div className="text-center">
+            <div className="bg-gray-300 p-6 rounded-lg">Commercial</div>
+            <p className="mt-2 text-gray-700">Commercial Products Description</p>
           </div>
-        ))}
-      </div>
+          <div className="text-center">
+            <div className="bg-gray-300 p-6 rounded-lg">Industrial</div>
+            <p className="mt-2 text-gray-700">Industrial Products Description</p>
+          </div>
+          <div className="text-center">
+            <div className="bg-gray-300 p-6 rounded-lg">Residential</div>
+            <p className="mt-2 text-gray-700">Residential Products Description</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Solutions Section */}
+      <section id="solutions" className="py-16 bg-gray-100">
+        <h2 className="text-navy-500 text-center text-3xl font-bold mb-10">Solutions</h2>
+        <div className="grid grid-cols-3 gap-8">
+          <div className="text-center">
+            <div className="bg-teal-500 text-white p-6 rounded-lg">Energy Solutions</div>
+            <button className="mt-4 bg-orange-500 text-white px-4 py-2 rounded">Learn More</button>
+          </div>
+          <div className="text-center">
+            <div className="bg-teal-500 text-white p-6 rounded-lg">Custom Solutions</div>
+            <button className="mt-4 bg-orange-500 text-white px-4 py-2 rounded">Learn More</button>
+          </div>
+          <div className="text-center">
+            <div className="bg-teal-500 text-white p-6 rounded-lg">Electrical Drawings</div>
+            <button className="mt-4 bg-orange-500 text-white px-4 py-2 rounded">Learn More</button>
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="py-16">
+        <h2 className="text-teal-500 text-center text-3xl font-bold mb-10">Projects</h2>
+        <div className="grid grid-cols-3 gap-8">
+          <div className="bg-gray-300 p-6 rounded-lg">
+            <h3>Project 1</h3>
+            <p>Short project description</p>
+          </div>
+          <div className="bg-gray-300 p-6 rounded-lg">
+            <h3>Project 2</h3>
+            <p>Short project description</p>
+          </div>
+          <div className="bg-gray-300 p-6 rounded-lg">
+            <h3>Project 3</h3>
+            <p>Short project description</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="py-16 bg-gray-100">
+        <h2 className="text-navy-500 text-center text-3xl font-bold mb-10">Client Testimonials</h2>
+        <div className="grid grid-cols-3 gap-8">
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <p>"Great service and solutions!"</p>
+            <p>- Client 1</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <p>"Professional team and reliable products."</p>
+            <p>- Client 2</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <p>"Excellent support and custom solutions!"</p>
+            <p>- Client 3</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Blog Section */}
+      <section id="blog" className="py-16">
+        <h2 className="text-orange-500 text-center text-3xl font-bold mb-10">Latest News</h2>
+        <div className="grid grid-cols-3 gap-8">
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3>Blog Post 1</h3>
+            <p>Short blog description</p>
+            <button className="mt-4 bg-orange-500 text-white px-4 py-2 rounded">Read More</button>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3>Blog Post 2</h3>
+            <p>Short blog description</p>
+            <button className="mt-4 bg-orange-500 text-white px-4 py-2 rounded">Read More</button>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h3>Blog Post 3</h3>
+            <p>Short blog description</p>
+            <button className="mt-4 bg-orange-500 text-white px-4 py-2 rounded">Read More</button>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-navy text-white p-6 text-center">
+        <div className="space-x-4">
+          <a href="#facebook">Facebook</a>
+          <a href="#linkedin">LinkedIn</a>
+          <a href="#twitter">Twitter</a>
+        </div>
+        <div>
+          <p>Company Address</p>
+          <p>Contact Number</p>
+          <p>Email Address</p>
+        </div>
+      </footer>
     </div>
   );
-}
+};
 
+export default Homepage;
