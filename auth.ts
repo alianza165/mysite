@@ -23,7 +23,7 @@ const options = {
       async authorize(credentials) {
         try {
           const response = await axios.post(
-            'http://3.226.46.93:8000/accounts/token/',
+            'https://www.princeautomation.org/accounts/token/',
             {
               username: credentials.email,
               password: credentials.password,
@@ -55,10 +55,10 @@ const options = {
   callbacks: {
     async jwt({ token, account, user }) {
       if (account && account.provider === 'google') {
-        const response = await fetch('http://3.226.46.93:8000/accounts/google/', {
+        const response = await fetch('https://www.princeautomation.org/accounts/google/', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${account.access_token}`,
+            'Authorization': `Bearer ${account.id_token}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
