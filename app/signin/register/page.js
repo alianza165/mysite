@@ -17,14 +17,25 @@ export default function SignUpComponent() {
   };
 
   const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isUsernameValid, setIsUsernameValid] = useState(true);
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [error, setError] = useState("");  // Add error state
 
   const isPasswordMatch = password === confirmPassword;
   const isPasswordLengthValid = password.length > 7;
   const hasPasswordNumberAndUpper = /[A-Z]/.test(password) && /[1234567890]/.test(password);
+
+  const handleUsernameChange = (e) => {
+    const newUsername = e.target.value;
+    setUsername(newUsername);
+    
+    // Regular expression to validate email
+    const usernameRegex = /^[a-zA-Z0-9]+$/;
+    setIsUsernameValid(usernameRegex.test(newUsername));
+  };
 
   const handleEmailChange = (e) => {
     const newEmail = e.target.value;
@@ -38,11 +49,13 @@ export default function SignUpComponent() {
 const handleRegister = async () => {
   event.preventDefault();
   try {
+    const Username = username;
     const Email = email; // Replace with the actual email input state
     const Password = password;  // Replace with the actual password input state
     const response = await axios.post(
       'http://3.226.46.93:8000/accounts/user-login/',
       {
+        username: Username,
         email: Email,
         password: Password
       },
@@ -95,7 +108,26 @@ const handleRegister = async () => {
         </div>
       )}
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form action="#" method="POST" className="space-y-6">
+        <form action="#" method="POST" className="space-y-2">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+              Name
+            </label>
+            <div className="mt-2">
+              <input
+                id="username"
+                name="username"
+                type="username"
+                required
+                autoComplete="username"
+                className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                onChange={handleUsernameChange}
+              />
+            </div>
+            <p className="text-sm text-red-500">
+            {!isUsernameValid ? 'You may only use numbers and/or letters' : '\u00A0'}
+            </p>
+          </div>
           <div>
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
               Email address
@@ -183,11 +215,11 @@ const handleRegister = async () => {
             onClick={handleRegister}
             type="submit"
             className={`flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${
-              !isPasswordMatch || !isPasswordLengthValid || !hasPasswordNumberAndUpper || !isEmailValid
+              !isPasswordMatch || !isPasswordLengthValid || !hasPasswordNumberAndUpper || !isEmailValid || !isUsernameValid
                 ? 'bg-gray-400 cursor-not-allowed'
                 : 'bg-indigo-600'
             }`}
-            disabled={!isPasswordMatch || !isPasswordLengthValid || !hasPasswordNumberAndUpper || !isEmailValid}
+            disabled={!isPasswordMatch || !isPasswordLengthValid || !hasPasswordNumberAndUpper || !isEmailValid || !isUsernameValid}
           >
               Register
             </button>

@@ -278,6 +278,10 @@ export default function Header() {
                 <ChartPieIcon className="w-6 h-6 text-gray-800" stroke={strokeClass} />
                 <p className='pl-4 pt-1'> Reports </p>
               </div>
+              <Link href="/electrical" className='flex hover:bg-teal-600 p-2 rounded-md cursor-pointer'>
+                <UserGroupIcon className="w-6 h-6 text-gray-800" stroke={strokeClass} />
+                <p className='pl-4 pt-1'> Electrical </p>
+              </Link>
               <h1 className="text-2xl font-bold my-4">Sidebar</h1>
               <Protected />
               <ul>
