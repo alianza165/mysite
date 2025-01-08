@@ -1,44 +1,70 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { uploadProject } from '../../utils/api'
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { uploadProject } from '../../utils/api';
 import { useAppContext } from '../context/AppContext';
+import { useDropzone } from 'react-dropzone';
 
 export default function Electrical() {
-  const [phase, setPhase] = useState('single')
-  const [loadType, setLoadType] = useState('inductive')
-  const [ampere, setAmpere] = useState('')
-  const [sldFile, setSldFile] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
-  const router = useRouter()
+  const [phase, setPhase] = useState('single');
+  const [loadType, setLoadType] = useState('inductive');
+  const [ampere, setAmpere] = useState('');
+  const [sldFile, setSldFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const router = useRouter();
   const { theme, isOpen } = useAppContext();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError('')
-
-    const formData = new FormData()
-    if (sldFile) {
-      formData.append('sld_file', sldFile)
+  const onDrop = (acceptedFiles) => {
+    if (acceptedFiles.length > 0) {
+      setSldFile(acceptedFiles[0]);
+      setError('');
+    } else {
+      setError('Invalid file type. Please upload a PDF, DWG, or DXF file.');
     }
-    formData.append('phase', phase)
-    formData.append('load_type', loadType)
-    formData.append('ampere', ampere)
+  };
+
+const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  onDrop,
+  accept: {
+    'application/pdf': ['.pdf'],
+    'application/vnd.dwg': ['.dwg'],
+    'application/dxf': ['.dxf'],
+  },
+  maxFiles: 1,
+  maxSize: 10 * 1024 * 1024, // 10MB
+});
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+
+    if (!sldFile) {
+      setError('Please upload a valid SLD file.');
+      setIsLoading(false);
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('sld_file', sldFile);
+    formData.append('phase', phase);
+    formData.append('load_type', loadType);
+    formData.append('ampere', ampere);
 
     try {
-      const response = await uploadProject(formData)
-      const projectId = response.data.id
-      router.push(`/electrical/results?projectId=${projectId}`)
+      const response = await uploadProject(formData);
+      const projectId = response.data.id;
+      router.push(`/electrical/results?projectId=${projectId}`);
     } catch (error) {
-      console.error('Error submitting project:', error)
-      setError('There was a problem submitting your project. Please try again.')
+      console.error('Error submitting project:', error);
+      setError('There was a problem submitting your project. Please try again.');
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const marginLeft = isOpen ? 'md:ml-64' : 'md:ml-20';
   const themeClass = theme === 'dark' ? 'bg-black' : 'bg-white';
@@ -51,7 +77,13 @@ export default function Electrical() {
           <label htmlFor="sldFile" className="block text-sm font-medium text-gray-700 mb-1">
             SLD File
           </label>
-          <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+          <div
+            {...getRootProps()}
+            className={`mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md cursor-pointer ${
+              isDragActive ? 'border-blue-500' : 'border-gray-300'
+            }`}
+          >
+            <input {...getInputProps()} id="sldFile" name="sldFile" />
             <div className="space-y-1 text-center">
               <svg
                 className="mx-auto h-12 w-12 text-gray-400"
@@ -68,20 +100,11 @@ export default function Electrical() {
                 />
               </svg>
               <div className="flex text-sm text-gray-600">
-                <label
-                  htmlFor="sldFile"
-                  className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-                >
-                  <span>Upload a file</span>
-                  <input
-                    id="sldFile"
-                    name="sldFile"
-                    type="file"
-                    className="sr-only"
-                    onChange={(e) => setSldFile(e.target.files?.[0] || null)}
-                  />
-                </label>
-                <p className="pl-1">or drag and drop</p>
+                {sldFile ? (
+                  <p className="text-green-600">File selected: {sldFile.name}</p>
+                ) : (
+                  <p>Drag and drop a file here, or click to select one</p>
+                )}
               </div>
               <p className="text-xs text-gray-500">PDF, DWG, or DXF up to 10MB</p>
             </div>
@@ -144,5 +167,5 @@ export default function Electrical() {
         </div>
       </form>
     </section>
-  )
+  );
 }

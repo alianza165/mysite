@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { fetchResults } from '../../../utils/api';
 import { useAppContext } from '../../context/AppContext';
@@ -44,7 +44,15 @@ const TableCell = ({ children }) => (
   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{children}</td>
 );
 
-export default function Results() {
+export default function ResultsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Results />
+    </Suspense>
+  );
+}
+
+function Results() {
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
